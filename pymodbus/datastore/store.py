@@ -53,7 +53,7 @@ from pymodbus.exceptions import NotImplementedException, ParameterException
 #---------------------------------------------------------------------------#
 import logging
 _logger = logging.getLogger(__name__)
-
+import six
 
 #---------------------------------------------------------------------------#
 # Datablock Storage
@@ -204,8 +204,8 @@ class ModbusSparseDataBlock(BaseModbusDataBlock):
             self.values = dict(enumerate(values))
         else: raise ParameterException(
             "Values for datastore must be a list or dictionary")
-        self.default_value = next(self.values.values()).__class__()
-        self.address = next(self.values.keys())
+        self.default_value = six.next(self.values.values()).__class__()
+        self.address = six.next(self.values.keys())
 
     @classmethod
     def create(klass):
