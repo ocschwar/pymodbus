@@ -204,8 +204,9 @@ class ModbusSparseDataBlock(BaseModbusDataBlock):
             self.values = dict(enumerate(values))
         else: raise ParameterException(
             "Values for datastore must be a list or dictionary")
-        self.default_value = six.next(self.values.values()).__class__()
-        self.address = six.next(self.values.keys())
+        # WTF...
+        self.address = min(list(self.values.keys()))
+        self.default_value = self.values[self.address]
 
     @classmethod
     def create(klass):
